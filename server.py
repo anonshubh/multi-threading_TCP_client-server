@@ -23,8 +23,9 @@ def handle_client(connection,address):
         decoded_bytes = base64.b64decode(message)
         data = str(decoded_bytes,"utf-8")
         print(f"From Address:{address}, Message:{data}")
+        connection.send(f"Received {data[3:]}!".encode('utf-8'))
     
-    print(f"Client {address} Disconnected!")
+    print(f"Client {address} is Disconnected!")
     connection.close() # Closes the connection when no message is sent from Particular Client
 
 
@@ -33,7 +34,7 @@ def run_server():
     server.listen()
     while True:
         connection, address = server.accept()
-        thread = threading.Thread(target=handle_client,args=(connection,address))
+        thread = threading.Thread(target=handle_client,args=(connection,address)) # Creates a Thread for a new client
         thread.start()
         print(f"Number of Connected Clients: {threading.activeCount()-1}")# Subtracts the initial Listening Thread
 

@@ -19,6 +19,7 @@ def send(data):
     print(f"Sending {data} to Server")
     message = base64.b64encode(data.encode("utf-8"))
     client.send(message)
+    print(client.recv(1024).decode('utf-8')) # Prints the Data received from Server
 
 
 if __name__ == '__main__':
@@ -28,7 +29,7 @@ if __name__ == '__main__':
             Q = random.randint(100,500)
             data = f"C3:(P,Q)=({P},{Q})"
             send(data)
-            time.sleep(3)
+            time.sleep(2)
     except:
         print("\nStopped Sending requests to Server...")
     finally:
